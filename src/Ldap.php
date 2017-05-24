@@ -213,6 +213,7 @@ class Ldap
      *  optReferrals
      *  tryUsernameSplit
      *  networkTimeout
+     *  saslOpts
      *
      * @param  array|Traversable $options Options used in connecting, binding, etc.
      * @return Ldap Provides a fluent interface
