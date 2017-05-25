@@ -34,3 +34,4 @@ if (defined('TESTS_ZEND_OB_ENABLED') && constant('TESTS_ZEND_OB_ENABLED')) {
  */
 putenv(sprintf("LDAPTLS_CERT=%s", getenv('TESTS_ZEND_LDAP_SASL_CERTIFICATE')));
 putenv(sprintf("LDAPTLS_KEY=%s", getenv('TESTS_ZEND_LDAP_SASL_KEY')));
+putenv('LDAPTLS_REQCERT=never');
