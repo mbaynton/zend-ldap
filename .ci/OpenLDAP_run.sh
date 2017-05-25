@@ -13,4 +13,4 @@ echo "Launching OpenLDAP ..."
 slapd -h "ldap://0.0.0.0:3890/" -f ${DIR}/OpenLDAP/slapd.conf
 
 # Wait for LDAP to start
-sleep 1
+sleep 10
