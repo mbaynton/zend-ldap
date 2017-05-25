@@ -8,6 +8,8 @@ echo "Creating database directory"
 rm -rf ${LDAP_DB} && mkdir ${LDAP_DB} && cp  /usr/share/doc/slapd/examples/DB_CONFIG ${LDAP_DB}
 
 cp ${DIR}/OpenLDAP/ssl-cert-snakeoil.* /tmp
+cp ${DIR}/OpenLDAP/client-*.pem /tmp
+
 
 echo "Launching OpenLDAP ..."
 
