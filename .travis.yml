@@ -18,6 +18,7 @@ addons:
     packages:
       - slapd
       - ldap-utils
+      - net-tools
 
 env:
   global:
@@ -74,10 +75,10 @@ matrix:
     - php: hhvm
       env:
         - DEPS=lowest
-    - php: hhvm 
+    - php: hhvm
       env:
         - DEPS=locked
-    - php: hhvm 
+    - php: hhvm
       env:
         - DEPS=latest
   allow_failures:
