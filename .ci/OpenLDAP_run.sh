@@ -7,10 +7,12 @@ echo "Creating database directory"
 
 rm -rf ${LDAP_DB} && mkdir ${LDAP_DB} && cp  /usr/share/doc/slapd/examples/DB_CONFIG ${LDAP_DB}
 
+cp ${DIR}/OpenLDAP/ssl-cert-snakeoil.* /tmp
+
 echo "Launching OpenLDAP ..."
 
 # Start slapd with non root privileges
-timeout 15 slapd -d 64 -h "ldap://0.0.0.0:3890/" -f ${DIR}/OpenLDAP/slapd.conf
+slapd -h "ldap://0.0.0.0:3890/ ldaps://0.0.0.0:6360" -f ${DIR}/OpenLDAP/slapd.conf
 
 # Wait for LDAP to start
-sleep 10
+sleep 2
