@@ -21,6 +21,7 @@ addons:
       - libsasl2-2
       - libsasl2-modules
       - libsasl2-modules-db
+      - libsasl2-modules-ldap
 
 env:
   global:
