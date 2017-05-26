@@ -18,6 +18,9 @@ addons:
     packages:
       - slapd
       - ldap-utils
+      - libsasl2-2
+      - libsasl2-modules
+      - libsasl2-modules-db
 
 env:
   global:
