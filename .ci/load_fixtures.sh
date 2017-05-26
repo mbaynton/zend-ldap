@@ -11,3 +11,10 @@ for FIXTURE in `ls ${FIXTURES_DIR}`
 do
   load_fixture "${FIXTURES_DIR}/${FIXTURE}"
 done;
+
+# Test ldaps SASL EXTERNAL
+export LDAPTLS_REQCERT=never
+export LDAPTLS_CERT=/tmp/client-cert.pem
+export LDAPTLS_KEY=/tmp/client-key.pem
+
+ldapsearch -d "-1" -Y EXTERNAL -H ldaps://localhost:6360 -b dc=example,dc=com '(uid=user1)' dn
