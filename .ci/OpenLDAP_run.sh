@@ -9,7 +9,7 @@ rm -rf ${LDAP_DB} && mkdir ${LDAP_DB} && cp  /usr/share/doc/slapd/examples/DB_CO
 
 cp ${DIR}/OpenLDAP/ssl-cert-snakeoil.* /tmp
 cp ${DIR}/OpenLDAP/client-*.pem /tmp
-
+chmod a+r /tmp/client-*.pem
 
 echo "Launching OpenLDAP ..."
 
