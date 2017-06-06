@@ -1,5 +1,6 @@
 sudo: false
 
+dist: trusty
 language: php
 
 branches:
@@ -74,10 +75,10 @@ matrix:
     - php: hhvm
       env:
         - DEPS=lowest
-    - php: hhvm 
+    - php: hhvm
       env:
         - DEPS=locked
-    - php: hhvm 
+    - php: hhvm
       env:
         - DEPS=latest
   allow_failures:
