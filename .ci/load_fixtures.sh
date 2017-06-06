@@ -11,4 +11,3 @@ for FIXTURE in `ls ${FIXTURES_DIR}`
 do
   load_fixture "${FIXTURES_DIR}/${FIXTURE}"
 done;
-

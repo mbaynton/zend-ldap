@@ -799,14 +799,6 @@ class Ldap
             $saslOpts = $this->getSaslOpts();
         }
 
-        if (is_array($saslOpts)) {
-            $sasl_mech = empty($saslOpts['sasl_mech']) ? null : $saslOpts['sasl_mech'];
-            $sasl_realm = array_key_exists('sasl_realm', $saslOpts) ? $saslOpts['sasl_realm'] : null;
-            $sasl_authc_id = array_key_exists('sasl_authc_id', $saslOpts) ? $saslOpts['sasl_authc_id'] : null;
-            $sasl_authz_id = array_key_exists('sasl_authz_id', $saslOpts) ? $saslOpts['sasl_authz_id'] : null;
-            $sasl_props = array_key_exists('props', $saslOpts) ? $saslOpts['props'] : null;
-        }
-
         if (empty($username)) {
             /* Perform anonymous bind
              */
@@ -861,6 +853,12 @@ class Ldap
         } else {
             ErrorHandler::start(E_WARNING);
             if (is_array($saslOpts)) {
+                $sasl_mech = array_key_exists('sasl_mech', $saslOpts) ? $saslOpts['sasl_mech'] : null;
+                $sasl_realm = array_key_exists('sasl_realm', $saslOpts) ? $saslOpts['sasl_realm'] : null;
+                $sasl_authc_id = array_key_exists('sasl_authc_id', $saslOpts) ? $saslOpts['sasl_authc_id'] : null;
+                $sasl_authz_id = array_key_exists('sasl_authz_id', $saslOpts) ? $saslOpts['sasl_authz_id'] : null;
+                $sasl_props = array_key_exists('props', $saslOpts) ? $saslOpts['props'] : null;
+
                 $bind = ldap_sasl_bind(
                     $this->resource,
                     $username,
