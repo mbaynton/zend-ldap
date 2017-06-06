@@ -276,13 +276,14 @@ class BindTest extends \PHPUnit_Framework_TestCase
 
     protected function getSslLdap($options)
     {
-        $options['useSsl'] = TRUE;
+        $options['useSsl'] = true;
         $options['port'] = 6360;
 
         return new Ldap\Ldap($options);
     }
 
-    public function testSaslBind() {
+    public function testSaslBind()
+    {
         $options = $this->options;
         $options['saslOpts'] = [
             'sasl_mech' => 'EXTERNAL',
@@ -296,7 +297,7 @@ class BindTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testSaslBind_noExplicitUsername() {
+    public function testSaslBindNoExplicitUsername() {
         // Username should not be required, as it can be derived from the
         // client certificate.
         $options = $this->options;

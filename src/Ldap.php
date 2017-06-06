@@ -860,14 +860,15 @@ class Ldap
                 $sasl_props = array_key_exists('props', $saslOpts) ? $saslOpts['props'] : null;
 
                 $bind = ldap_sasl_bind(
-                    $this->resource,
-                    $username,
-                    $password,
-                    $sasl_mech,
-                    $sasl_realm,
-                    $sasl_authc_id,
-                    $sasl_authz_id,
-                    $sasl_props);
+                $this->resource,
+                $username,
+                $password,
+                $sasl_mech,
+                $sasl_realm,
+                $sasl_authc_id,
+                $sasl_authz_id,
+                $sasl_props
+                );
             } else {
                 $bind = ldap_bind($this->resource, $username, $password);
             }
