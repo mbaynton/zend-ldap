@@ -9,6 +9,7 @@
 
 namespace ZendTest\Ldap;
 
+use phpmock\Mock;
 use Zend\Config;
 use Zend\Ldap;
 use Zend\Ldap\Exception;
@@ -39,6 +40,24 @@ class OfflineTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->ldap = new Ldap\Ldap();
+    }
+
+    /**
+     * Enables mocks for ldap_connect(), ldap_bind(), and ldap_set_option().
+     * Not all tests need or are compatible with this, so it is called expliclty
+     * by tests that do.
+     */
+    protected function activateBindableOfflineMocks()
+    {
+        \LdapReusableMocks::$ldap_connect_mock->enable();
+        \LdapReusableMocks::$ldap_bind_mock->enable();
+        \LdapReusableMocks::$ldap_set_option_mock->enable();
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+        Mock::disableAll();
     }
 
     /**
@@ -220,20 +239,6 @@ class OfflineTest extends \PHPUnit_Framework_TestCase
 
         $ldap = new \Zend\Ldap\Ldap();
         $ldap->addAttributes('foo', ['bar']);
-    }
-
-    protected function activateBindableOfflineMocks()
-    {
-        $a_resource = fopen(__FILE__, 'r');
-        $ldap_connect = $this->getFunctionMock('Zend\\Ldap', 'ldap_connect');
-        $ldap_connect->expects($this->atLeastOnce())
-            ->willReturn($a_resource);
-        $ldap_bind = $this->getFunctionMock('Zend\\Ldap', 'ldap_bind');
-        $ldap_bind->expects($this->atLeastOnce())
-            ->willReturn(true);
-        $ldap_set_option = $this->getFunctionMock('Zend\\Ldap', 'ldap_set_option');
-        $ldap_set_option->expects($this->atLeastOnce())
-            ->willReturn(true);
     }
 
     protected function reportErrorsAsConnectionFailure()
