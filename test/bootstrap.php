@@ -32,7 +32,8 @@ if (defined('TESTS_ZEND_OB_ENABLED') && constant('TESTS_ZEND_OB_ENABLED')) {
  * phpunit would find them and error while attempting to serialize global
  * variables.
  */
-class LdapReusableMocks {
+class LdapReusableMocks
+{
     public static $ldap_connect_mock = null;
     public static $ldap_bind_mock = null;
     public static $ldap_set_option_mock = null;
