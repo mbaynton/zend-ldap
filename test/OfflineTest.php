@@ -138,7 +138,7 @@ class OfflineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider removingAttributesProvider
+     * @dataProvider attributeLevelTestsProvider
      */
     public function testRemovingAttributes(
         $dn,
@@ -160,7 +160,7 @@ class OfflineTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($ldap, $ldap->deleteAttributes($dn, $attributes, $allowEmptyAttributes));
     }
 
-    public function removingAttributesProvider()
+    public function attributeLevelTestsProvider()
     {
         return [
             // Description => [dn, attributes, allow empty attributes, expected dn, expected attributes to remove]
@@ -209,7 +209,7 @@ class OfflineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider removingAttributesProvider
+     * @dataProvider attributeLevelTestsProvider
      */
     public function testAddingAttributes(
         $dn,
@@ -242,6 +242,42 @@ class OfflineTest extends \PHPUnit_Framework_TestCase
 
         $ldap = new \Zend\Ldap\Ldap();
         $ldap->addAttributes('foo', ['bar']);
+    }
+
+    /**
+     * @dataProvider attributeLevelTestsProvider
+     */
+    public function testReplacingAttributes(
+        $dn,
+        $attributes,
+        $allowEmptyAttributes,
+        $expectedDn,
+        $expectedAttributesToReplace
+    ) {
+        $ldap_mod_replace = $this->getFunctionMock('Zend\\Ldap', 'ldap_mod_replace');
+        $ldap_mod_replace->expects($this->once())
+            ->with(
+                $this->isNull(),
+                $this->equalTo($expectedDn),
+                $this->equalTo($expectedAttributesToReplace)
+            )
+            ->willReturn(true);
+
+        $ldap = new Ldap\Ldap();
+        $this->assertSame($ldap, $ldap->replaceAttributes($dn, $attributes, $allowEmptyAttributes));
+    }
+
+    /**
+     * @expectedException \Zend\Ldap\Exception\LdapException
+     */
+    public function testReplacingAttributesFails()
+    {
+        $ldap_mod_add = $this->getFunctionMock('Zend\\Ldap', 'ldap_mod_replace');
+        $ldap_mod_add->expects($this->once())
+            ->willReturn(false);
+
+        $ldap = new \Zend\Ldap\Ldap();
+        $ldap->replaceAttributes('foo', ['bar' => 'baz']);
     }
 
     protected function reportErrorsAsConnectionFailure()
@@ -284,6 +320,24 @@ class OfflineTest extends \PHPUnit_Framework_TestCase
         ]);
         $ldap->bind();
         $ldap->deleteAttributes('foo', ['bar']);
+        $this->assertEquals(1, $ldap->getReconnectsAttempted());
+    }
+
+    public function testReplacingAttributesReconnect()
+    {
+        $this->activateBindableOfflineMocks();
+        $this->reportErrorsAsConnectionFailure();
+
+        $ldap_mod_replace = $this->getFunctionMock('Zend\\Ldap', 'ldap_mod_replace');
+        $ldap_mod_replace->expects($this->exactly(2))
+            ->willReturnOnConsecutiveCalls(false, true);
+
+        $ldap = new \Zend\Ldap\Ldap([
+            'host' => 'offline phony',
+            'reconnectAttempts' => 1
+        ]);
+        $ldap->bind();
+        $ldap->replaceAttributes('foo', ['bar' => 'baz']);
         $this->assertEquals(1, $ldap->getReconnectsAttempted());
     }
 }

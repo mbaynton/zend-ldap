@@ -1548,6 +1548,46 @@ class Ldap
     }
 
     /**
+     * Replace one or more attributes on the specified dn
+     *
+     * @param  string|Dn $dn
+     * @param  array     $attributes
+     * @param bool       $allowEmptyAttributes
+     *
+     * @return Ldap Provides a fluid interface
+     * @throws LdapException
+     */
+    public function replaceAttributes($dn, array $attributes, $allowEmptyAttributes = false)
+    {
+        // Safety-flap: Check whether there are empty arrays that would cause
+        // complete removal of entries without the emptyAll flag.
+        if ($allowEmptyAttributes !== true) {
+            foreach ($attributes as $key => $value) {
+                if (empty($value)) {
+                    unset($attributes[$key]);
+                }
+            }
+        }
+
+        if ($dn instanceof Dn) {
+            $dn = $dn->toString();
+        }
+
+        do {
+            ErrorHandler::start(E_WARNING);
+            $attrsReplaced = ldap_mod_replace($this->resource, $dn, $attributes);
+            ErrorHandler::stop();
+        } while ($attrsReplaced === false && $this->shouldReconnect($this->resource));
+
+
+        if ($attrsReplaced === false) {
+            throw new Exception\LdapException($this, 'replacing attributes: ' . $dn);
+        }
+
+        return $this;
+    }
+
+    /**
      * Delete single attributes from a LDAP-Node
      *
      * This method removes single attributes from a node identified by
