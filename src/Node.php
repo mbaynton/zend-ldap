@@ -1124,7 +1124,7 @@ class Node extends Node\AbstractNode implements Iterator, RecursiveIterator
             return $this->events;
         }
 
-        if (! class_exists(EventManager::class)) {
+        if (! class_exists('Zend\\EventManager\\EventManager')) {
             return;
         }
 
