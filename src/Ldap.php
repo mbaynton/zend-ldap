@@ -941,7 +941,7 @@ class Ldap
             }
 
             if ($this->shouldReconnect($this->resource)) {
-              return $this;
+                return $this;
             }
 
             $message = ($username === null) ? $this->connectString : $username;
