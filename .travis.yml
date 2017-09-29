@@ -93,6 +93,7 @@ notifications:
 before_install:
   - travis_retry composer self-update
   - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
+  - .ci/config_iptables.sh
 
 install:
   - if [[ ${TRAVIS_PHP_VERSION:0:3} == "5.5" ]]; then composer require $COMPOSER_ARGS --dev --no-update "phpunit/phpunit:^4"; fi
