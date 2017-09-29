@@ -1,4 +1,5 @@
-sudo: false
+sudo: required
+dist: trusty
 
 language: php
 
@@ -18,6 +19,7 @@ addons:
     packages:
       - slapd
       - ldap-utils
+      - conntrack
 
 env:
   global:
