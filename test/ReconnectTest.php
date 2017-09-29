@@ -98,7 +98,12 @@ class ReconnectTest extends AbstractOnlineTestCase
 
     protected function causeLdapConnectionFailure()
     {
-        file_get_contents('http://' . getenv('TESTS_ZEND_LDAP_HOST') . ':' . getenv('TESTS_ZEND_LDAP_SCRIPTS_PORT') . '/drop_3890.php' );
+        $url = sprintf(
+            'http://%s:%s/drop_3890.php',
+            getenv('TESTS_ZEND_LDAP_HOST'),
+            getenv('TESTS_ZEND_LDAP_SCRIPTS_PORT')
+        );
+        file_get_contents($url);
     }
 
     public function testNoReconnectWhenNotRequested()

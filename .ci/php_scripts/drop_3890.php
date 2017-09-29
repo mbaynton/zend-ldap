@@ -6,4 +6,4 @@
  *
  * This is used in reconnect tests.
  */
-system('/usr/bin/sudo /usr/sbin/conntrack -D -p tcp --state ESTABLISHED --dport 3890');
+system('/usr/bin/sudo /usr/sbin/conntrack -D -p tcp --state ESTABLISHED --dport 3890 2>&1');
