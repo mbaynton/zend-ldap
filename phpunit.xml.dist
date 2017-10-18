@@ -65,6 +65,7 @@
         <env name="TESTS_ZEND_LDAP_ONLINE_ENABLED" value="false" />
         <env name="TESTS_ZEND_LDAP_HOST" value="localhost" />
         <env name="TESTS_ZEND_LDAP_PORT" value="3890" />
+        <env name="TESTS_ZEND_LDAP_SCRIPTS_PORT" value="3891" />
         <env name="TESTS_ZEND_LDAP_USE_START_TLS" value="false" />
         <env name="TESTS_ZEND_LDAP_USE_SSL" value="false" />
         <env name="TESTS_ZEND_LDAP_USERNAME" value="cn=Manager,dc=example,dc=com" />
@@ -80,6 +81,5 @@
         <env name="TESTS_ZEND_LDAP_ALT_PASSWORD" value="user1" />
         <env name="TESTS_ZEND_LDAP_WRITEABLE_SUBTREE" value="ou=test,dc=example,dc=com" />
         <env name="TESTS_ZEND_LDAP_ANONYMOUS_BIND_ALLOWED" value="true"/>
-        <env name="TESTS_ZEND_LDAP_IDLE_TIMEOUT" value="4" />
     </php>
 </phpunit>
